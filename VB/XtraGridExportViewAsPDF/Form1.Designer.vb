@@ -52,7 +52,7 @@ Namespace XtraGridExportViewAsPDF
             Me.button1.TabIndex = 0
             Me.button1.Text = "Export As PDF"
             Me.button1.UseVisualStyleBackColor = True
-            Me.button1.Click += New System.EventHandler(AddressOf Me.button1_Click)
+            AddHandler Me.button1.Click, New System.EventHandler(AddressOf Me.button1_Click)
             ' 
             ' gridControl1
             ' 
@@ -129,7 +129,7 @@ Namespace XtraGridExportViewAsPDF
             Me.Controls.Add(Me.button1)
             Me.Name = "Form1"
             Me.Text = "Form1"
-            Me.Load += New System.EventHandler(AddressOf Me.Form1_Load)
+            AddHandler Me.Load, New System.EventHandler(AddressOf Me.Form1_Load)
             CType((Me.gridControl1), System.ComponentModel.ISupportInitialize).EndInit()
             CType((Me.ordersBindingSource), System.ComponentModel.ISupportInitialize).EndInit()
             CType((Me.nwindDataSet), System.ComponentModel.ISupportInitialize).EndInit()

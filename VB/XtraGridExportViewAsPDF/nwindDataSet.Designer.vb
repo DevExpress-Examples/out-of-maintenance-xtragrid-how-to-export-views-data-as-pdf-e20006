@@ -13,9 +13,9 @@ Namespace XtraGridExportViewAsPDF
     ''' Represents a strongly typed in-memory cache of data.
     ''' </summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")>
-    <Global.System.Serializable()>
+    <Global.System.SerializableAttribute()>
     <Global.System.ComponentModel.DesignerCategoryAttribute("code")>
-    <Global.System.ComponentModel.ToolboxItem(True)>
+    <Global.System.ComponentModel.ToolboxItemAttribute(True)>
     <Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")>
     <Global.System.Xml.Serialization.XmlRootAttribute("nwindDataSet")>
     <Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")>
@@ -31,24 +31,24 @@ Namespace XtraGridExportViewAsPDF
             Me.BeginInit()
             Me.InitClass()
             Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = New Global.System.ComponentModel.CollectionChangeEventHandler(AddressOf Me.SchemaChanged)
-            MyBase.Tables.CollectionChanged += schemaChangedHandler
-            MyBase.Relations.CollectionChanged += schemaChangedHandler
+            AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
+            AddHandler MyBase.Relations.CollectionChanged, schemaChangedHandler
             Me.EndInit()
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
         Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
             MyBase.New(info, context, False)
-            If(Me.IsBinarySerialized(info, context) Is True) Then
+            If(Me.IsBinarySerialized(info, context) = True) Then
                 Me.InitVars(False)
                 Dim schemaChangedHandler1 As Global.System.ComponentModel.CollectionChangeEventHandler = New Global.System.ComponentModel.CollectionChangeEventHandler(AddressOf Me.SchemaChanged)
-                Me.Tables.CollectionChanged += schemaChangedHandler1
-                Me.Relations.CollectionChanged += schemaChangedHandler1
+                AddHandler Me.Tables.CollectionChanged, schemaChangedHandler1
+                AddHandler Me.Relations.CollectionChanged, schemaChangedHandler1
                 Return
             End If
 
             Dim strSchema As String =(CStr((info.GetValue("XmlSchema", GetType(String)))))
-            If(Me.DetermineSchemaSerializationMode(info, context) Is Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
+            If(Me.DetermineSchemaSerializationMode(info, context) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
                 Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
                 ds.ReadXmlSchema(New Global.System.Xml.XmlTextReader(New Global.System.IO.StringReader(strSchema)))
                 If(ds.Tables("Orders") IsNot Nothing) Then
@@ -69,13 +69,13 @@ Namespace XtraGridExportViewAsPDF
 
             Me.GetSerializationData(info, context)
             Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = New Global.System.ComponentModel.CollectionChangeEventHandler(AddressOf Me.SchemaChanged)
-            MyBase.Tables.CollectionChanged += schemaChangedHandler
-            Me.Relations.CollectionChanged += schemaChangedHandler
+            AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
+            AddHandler Me.Relations.CollectionChanged, schemaChangedHandler
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
-        <Global.System.ComponentModel.Browsable(False)>
-        <Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>
+        <Global.System.ComponentModel.BrowsableAttribute(False)>
+        <Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>
         Public ReadOnly Property Orders As OrdersDataTable
             Get
                 Return Me.tableOrders
@@ -138,7 +138,7 @@ Namespace XtraGridExportViewAsPDF
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
         Protected Overrides Sub ReadXmlSerializable(ByVal reader As Global.System.Xml.XmlReader)
-            If(Me.DetermineSchemaSerializationMode(reader) Is Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
+            If(Me.DetermineSchemaSerializationMode(reader) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
                 Me.Reset()
                 Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
                 ds.ReadXml(reader)
@@ -176,7 +176,7 @@ Namespace XtraGridExportViewAsPDF
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
         Friend Sub InitVars(ByVal initTable As Boolean)
             Me.tableOrders = CType((MyBase.Tables("Orders")), XtraGridExportViewAsPDF.nwindDataSet.OrdersDataTable)
-            If(initTable Is True) Then
+            If(initTable = True) Then
                 If(Me.tableOrders IsNot Nothing) Then
                     Me.tableOrders.InitVars()
                 End If
@@ -201,7 +201,7 @@ Namespace XtraGridExportViewAsPDF
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
         Private Sub SchemaChanged(ByVal sender As Object, ByVal e As Global.System.ComponentModel.CollectionChangeEventArgs)
-            If(e.Action Is Global.System.ComponentModel.CollectionChangeAction.Remove) Then
+            If(e.Action = Global.System.ComponentModel.CollectionChangeAction.Remove) Then
                 Me.InitVars()
             End If
         End Sub
@@ -222,18 +222,18 @@ Namespace XtraGridExportViewAsPDF
                 Try
                     Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
                     dsSchema.Write(s1)
-                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator()
+                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(CStr((dsSchema.TargetNamespace))).GetEnumerator()
                     While schemas.MoveNext()
                         schema = CType((schemas.Current), Global.System.Xml.Schema.XmlSchema)
                         s2.SetLength(0)
                         schema.Write(s2)
-                        If(s1.Length Is s2.Length) Then
+                        If(s1.Length = s2.Length) Then
                             s1.Position = 0
                             s2.Position = 0
-                            While((s1.Position IsNot s1.Length) AndAlso (s1.ReadByte() Is s2.ReadByte()))
+                            While((s1.Position <> s1.Length) AndAlso (s1.ReadByte() = s2.ReadByte()))
                             End While
 
-                            If(s1.Position Is s1.Length) Then
+                            If(s1.Position = s1.Length) Then
                                 Return type
                             End If
                         End If
@@ -259,7 +259,7 @@ Namespace XtraGridExportViewAsPDF
         ''' Represents the strongly named DataTable class.
         ''' </summary>
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")>
-        <Global.System.Serializable()>
+        <Global.System.SerializableAttribute()>
         <Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>
         Public Partial Class OrdersDataTable
             Inherits Global.System.Data.TypedTableBase(Of XtraGridExportViewAsPDF.nwindDataSet.OrdersRow)
@@ -285,15 +285,15 @@ Namespace XtraGridExportViewAsPDF
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
             Friend Sub New(ByVal table As Global.System.Data.DataTable)
                 Me.TableName = table.TableName
-                If(table.CaseSensitive IsNot table.DataSet.CaseSensitive) Then
+                If(table.CaseSensitive <> table.DataSet.CaseSensitive) Then
                     Me.CaseSensitive = table.CaseSensitive
                 End If
 
-                If(table.Locale.ToString() IsNot table.DataSet.Locale.ToString()) Then
+                If(Not Equals(table.Locale.ToString(), table.DataSet.Locale.ToString())) Then
                     Me.Locale = table.Locale
                 End If
 
-                If(table.[Namespace] IsNot table.DataSet.[Namespace]) Then
+                If(Not Equals(table.[Namespace], table.DataSet.[Namespace])) Then
                     Me.[Namespace] = table.[Namespace]
                 End If
 
@@ -343,7 +343,7 @@ Namespace XtraGridExportViewAsPDF
             End Property
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
-            <Global.System.ComponentModel.Browsable(False)>
+            <Global.System.ComponentModel.BrowsableAttribute(False)>
             Public ReadOnly Property Count As Integer
                 Get
                     Return Me.Rows.Count
@@ -493,18 +493,18 @@ Namespace XtraGridExportViewAsPDF
                     Try
                         Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
                         dsSchema.Write(s1)
-                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator()
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(CStr((dsSchema.TargetNamespace))).GetEnumerator()
                         While schemas.MoveNext()
                             schema = CType((schemas.Current), Global.System.Xml.Schema.XmlSchema)
                             s2.SetLength(0)
                             schema.Write(s2)
-                            If(s1.Length Is s2.Length) Then
+                            If(s1.Length = s2.Length) Then
                                 s1.Position = 0
                                 s2.Position = 0
-                                While((s1.Position IsNot s1.Length) AndAlso (s1.ReadByte() Is s2.ReadByte()))
+                                While((s1.Position <> s1.Length) AndAlso (s1.ReadByte() = s2.ReadByte()))
                                 End While
 
-                                If(s1.Position Is s1.Length) Then
+                                If(s1.Position = s1.Length) Then
                                     Return type
                                 End If
                             End If
@@ -559,7 +559,7 @@ Namespace XtraGridExportViewAsPDF
             Public Property OrderDate As System.DateTime
                 Get
                     Try
-                        Return CType((Me(Me.tableOrders.OrderDateColumn)), Global.System.DateTime)
+                        Return(CDate((Me(Me.tableOrders.OrderDateColumn))))
                     Catch e As Global.System.InvalidCastException
                         Throw New Global.System.Data.StrongTypingException("The value for column 'OrderDate' in table 'Orders' is DBNull.", e)
                     End Try
@@ -574,7 +574,7 @@ Namespace XtraGridExportViewAsPDF
             Public Property ShippedDate As System.DateTime
                 Get
                     Try
-                        Return CType((Me(Me.tableOrders.ShippedDateColumn)), Global.System.DateTime)
+                        Return(CDate((Me(Me.tableOrders.ShippedDateColumn))))
                     Catch e As Global.System.InvalidCastException
                         Throw New Global.System.Data.StrongTypingException("The value for column 'ShippedDate' in table 'Orders' is DBNull.", e)
                     End Try
@@ -707,7 +707,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
     ''' </summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")>
     <Global.System.ComponentModel.DesignerCategoryAttribute("code")>
-    <Global.System.ComponentModel.ToolboxItem(True)>
+    <Global.System.ComponentModel.ToolboxItemAttribute(True)>
     <Global.System.ComponentModel.DataObjectAttribute(True)>
     <Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" & ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")>
     <Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>
@@ -767,7 +767,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
                 Dim i As Integer = 0
                 While(i < Me.CommandCollection.Length)
                     If(Me.CommandCollection(i) IsNot Nothing) Then
-                        CType((Me.CommandCollection(i)), Global.System.Data.OleDb.OleDbCommand).Connection = value
+                        CType((Me.CommandCollection(CInt((i)))), Global.System.Data.OleDb.OleDbCommand).Connection = value
                     End If
 
                     i =(i + 1)
@@ -785,7 +785,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
                 Me._transaction = value
                 Dim i As Integer = 0
                 While(i < Me.CommandCollection.Length)
-                    Me.CommandCollection(i).Transaction = Me._transaction
+                    Me.CommandCollection(CInt((i))).Transaction = Me._transaction
                     i =(i + 1)
                 End While
 
@@ -849,9 +849,9 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
         Private Sub InitCommandCollection()
             Me._commandCollection = New Global.System.Data.OleDb.OleDbCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.OleDb.OleDbCommand()
-            Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT CustomerID, OrderDate, ShippedDate, ShipName, ShipCountry FROM Orders"
-            Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
+            Me._commandCollection(CInt((0))).Connection = Me.Connection
+            Me._commandCollection(CInt((0))).CommandText = "SELECT CustomerID, OrderDate, ShippedDate, ShipName, ShipCountry FROM Orders"
+            Me._commandCollection(CInt((0))).CommandType = Global.System.Data.CommandType.Text
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
@@ -859,7 +859,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
         <Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, True)>
         Public Overridable Function Fill(ByVal dataTable As XtraGridExportViewAsPDF.nwindDataSet.OrdersDataTable) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            If(Me.ClearBeforeFill Is True) Then
+            If(Me.ClearBeforeFill = True) Then
                 dataTable.Clear()
             End If
 
@@ -883,7 +883,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
     ''' </summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")>
     <Global.System.ComponentModel.DesignerCategoryAttribute("code")>
-    <Global.System.ComponentModel.ToolboxItem(True)>
+    <Global.System.ComponentModel.ToolboxItemAttribute(True)>
     <Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerDesigner, Microsoft.VSD" & "esigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")>
     <Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapterManager")>
     Public Partial Class TableAdapterManager
@@ -918,7 +918,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
         End Property
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
-        <Global.System.ComponentModel.Browsable(False)>
+        <Global.System.ComponentModel.BrowsableAttribute(False)>
         Public Property Connection As Global.System.Data.IDbConnection
             Get
                 If(Me._connection IsNot Nothing) Then
@@ -934,7 +934,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
         End Property
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
-        <Global.System.ComponentModel.Browsable(False)>
+        <Global.System.ComponentModel.BrowsableAttribute(False)>
         Public ReadOnly Property TableAdapterInstanceCount As Integer
             Get
                 Dim count As Integer = 0
@@ -986,7 +986,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
             Dim i As Integer = 0
             While(i < updatedRows.Length)
                 Dim row As Global.System.Data.DataRow = updatedRows(i)
-                If(allAddedRows.Contains(row) Is False) Then
+                If(allAddedRows.Contains(row) = False) Then
                     realUpdatedRows.Add(row)
                 End If
 
@@ -1005,7 +1005,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
                 Throw New Global.System.ArgumentNullException("dataSet")
             End If
 
-            If(dataSet.HasChanges() Is False) Then
+            If(dataSet.HasChanges() = False) Then
                 Return 0
             End If
 
@@ -1015,11 +1015,11 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
             End If
 
             Dim workConnOpened As Boolean = False
-            If((workConnection.State And Global.System.Data.ConnectionState.Broken) Is Global.System.Data.ConnectionState.Broken) Then
+            If((workConnection.State And Global.System.Data.ConnectionState.Broken) = Global.System.Data.ConnectionState.Broken) Then
                 workConnection.Close()
             End If
 
-            If(workConnection.State Is Global.System.Data.ConnectionState.Closed) Then
+            If(workConnection.State = Global.System.Data.ConnectionState.Closed) Then
                 workConnection.Open()
                 workConnOpened = True
             End If
@@ -1180,13 +1180,13 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
                 Call Global.System.Diagnostics.Debug.Assert((child IsNot Nothing))
                 Call Global.System.Diagnostics.Debug.Assert((parent IsNot Nothing))
                 Dim newParent As Global.System.Data.DataRow = child.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.[Default])
-                While((newParent IsNot Nothing) AndAlso ((Object.ReferenceEquals(newParent, child) Is False) AndAlso (Object.ReferenceEquals(newParent, parent) Is False)))
+                While((newParent IsNot Nothing) AndAlso ((Object.ReferenceEquals(newParent, child) = False) AndAlso (Object.ReferenceEquals(newParent, parent) = False)))
                     newParent = newParent.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.[Default])
                 End While
 
                 If(newParent Is Nothing) Then
                     newParent = child.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.Original)
-                    While((newParent IsNot Nothing) AndAlso ((Object.ReferenceEquals(newParent, child) Is False) AndAlso (Object.ReferenceEquals(newParent, parent) Is False)))
+                    While((newParent IsNot Nothing) AndAlso ((Object.ReferenceEquals(newParent, child) = False) AndAlso (Object.ReferenceEquals(newParent, parent) = False)))
                         newParent = newParent.GetParentRow(Me._relation, Global.System.Data.DataRowVersion.Original)
                     End While
                 End If
@@ -1199,7 +1199,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
             End Function
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
-            Public Function Compare(ByVal row1 As Global.System.Data.DataRow, ByVal row2 As Global.System.Data.DataRow) As Integer
+            Public Function Compare(ByVal row1 As Global.System.Data.DataRow, ByVal row2 As Global.System.Data.DataRow) As Integer Implements Global.System.Collections.Generic.IComparer(Of Global.System.Data.DataRow).Compare
                 If Object.ReferenceEquals(row1, row2) Then
                     Return 0
                 End If

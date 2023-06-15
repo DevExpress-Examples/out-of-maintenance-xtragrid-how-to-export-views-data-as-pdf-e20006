@@ -842,7 +842,7 @@ Namespace XtraGridExportViewAsPDF.nwindDataSetTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.OleDb.OleDbConnection()
-            Me._connection.ConnectionString = Global.XtraGridExportViewAsPDF.Properties.Settings.[Default].nwindConnectionString
+            Me._connection.ConnectionString = Global.My.Settings.Default.nwindConnectionString
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>

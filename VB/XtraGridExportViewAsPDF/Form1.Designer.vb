@@ -29,14 +29,14 @@ Namespace XtraGridExportViewAsPDF
             Me.button1 = New System.Windows.Forms.Button()
             Me.gridControl1 = New DevExpress.XtraGrid.GridControl()
             Me.ordersBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.nwindDataSet = New XtraGridExportViewAsPDF.nwindDataSet()
+            Me.nwindDataSet = New nwindDataSet()
             Me.gridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
             Me.colCustomerID = New DevExpress.XtraGrid.Columns.GridColumn()
             Me.colOrderDate = New DevExpress.XtraGrid.Columns.GridColumn()
             Me.colShippedDate = New DevExpress.XtraGrid.Columns.GridColumn()
             Me.colShipName = New DevExpress.XtraGrid.Columns.GridColumn()
             Me.colShipCountry = New DevExpress.XtraGrid.Columns.GridColumn()
-            Me.ordersTableAdapter = New XtraGridExportViewAsPDF.nwindDataSetTableAdapters.OrdersTableAdapter()
+            Me.ordersTableAdapter = New nwindDataSetTableAdapters.OrdersTableAdapter()
             CType((Me.gridControl1), System.ComponentModel.ISupportInitialize).BeginInit()
             CType((Me.ordersBindingSource), System.ComponentModel.ISupportInitialize).BeginInit()
             CType((Me.nwindDataSet), System.ComponentModel.ISupportInitialize).BeginInit()
@@ -144,11 +144,11 @@ Namespace XtraGridExportViewAsPDF
 
         Private gridView1 As DevExpress.XtraGrid.Views.Grid.GridView
 
-        Private nwindDataSet As XtraGridExportViewAsPDF.nwindDataSet
+        Private nwindDataSet As nwindDataSet
 
         Private ordersBindingSource As System.Windows.Forms.BindingSource
 
-        Private ordersTableAdapter As XtraGridExportViewAsPDF.nwindDataSetTableAdapters.OrdersTableAdapter
+        Private ordersTableAdapter As nwindDataSetTableAdapters.OrdersTableAdapter
 
         Private colCustomerID As DevExpress.XtraGrid.Columns.GridColumn
 
